@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2018 at 03:56 AM
+-- Generation Time: Jan 24, 2018 at 04:32 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -57,16 +57,21 @@ CREATE TABLE IF NOT EXISTS `darah` (
   `stok` int(10) NOT NULL,
   `jenis` varchar(25) NOT NULL,
   PRIMARY KEY (`id_darah`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `darah`
 --
 
 INSERT INTO `darah` (`id_darah`, `golongan`, `ukuran`, `harga`, `stok`, `jenis`) VALUES
-(1, 'A', '15', 50000, 12, 'Fresh'),
-(2, 'B', '500', 8000, 7, 'Fresh'),
-(3, 'AB', '200', 75000, 10, 'Fresh');
+(1, 'A', '2.5', 360000, 7, 'PRC'),
+(2, 'A', '3.5', 360000, 5, 'WB'),
+(3, 'AB', '2.5', 360000, 11, 'PRC'),
+(4, 'AB', '3.5', 360000, 7, 'WB'),
+(5, 'O', '2.5', 360000, 11, 'PRC'),
+(6, '0', '3.5', 360000, 7, 'WB'),
+(7, 'B', '2.5', 360000, 11, 'PRC'),
+(8, 'B', '3.5', 360000, 7, 'WB');
 
 -- --------------------------------------------------------
 
@@ -86,14 +91,15 @@ CREATE TABLE IF NOT EXISTS `distributor` (
   `alamat` text CHARACTER SET latin1,
   `telp` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id_distributor`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `distributor`
 --
 
 INSERT INTO `distributor` (`id_distributor`, `username`, `password`, `nama`, `jenis_kelamin`, `nip`, `nama_instansi`, `no_reg_instansi`, `alamat`, `telp`) VALUES
-(6, 'Ibnu', '95ea6a3742afe40417810ba13d6f1e0a', 'Ibnu Hajar', 'Laki-laki', 855545444, 'Puskesmas Menes', 2147483647, 'Jl. Ahmad Yani Alun-alun Menes', '085210484755');
+(6, 'Ibnu', '95ea6a3742afe40417810ba13d6f1e0a', 'Ibnu Hajar', 'Laki-laki', 855545444, 'Puskesmas Menes', 2147483647, 'Jl. Ahmad Yani Alun-alun Menes', '085210484755'),
+(7, 'fsg', '11a061ca8a5f26afc01c7db25edc210b', 'sdf', 'Laki-laki', 1213, 'sdf', 0, 'sdfsdf', '');
 
 -- --------------------------------------------------------
 
@@ -108,7 +114,16 @@ CREATE TABLE IF NOT EXISTS `keranjang` (
   `banyaknya` int(25) NOT NULL,
   `total` int(30) NOT NULL,
   PRIMARY KEY (`id_keranjang`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `keranjang`
+--
+
+INSERT INTO `keranjang` (`id_keranjang`, `id_distributor`, `id_darah`, `banyaknya`, `total`) VALUES
+(1, 6, 1, 1, 360000),
+(2, 6, 4, 1, 360000),
+(3, 6, 1, 1, 360000);
 
 -- --------------------------------------------------------
 
@@ -124,15 +139,15 @@ CREATE TABLE IF NOT EXISTS `konfirmasi` (
   `keterangan` varchar(30) NOT NULL,
   `tanggal` varchar(25) NOT NULL,
   PRIMARY KEY (`id_konfirmasi`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `konfirmasi`
 --
 
 INSERT INTO `konfirmasi` (`id_konfirmasi`, `id_penjualan`, `id_distributor`, `foto`, `keterangan`, `tanggal`) VALUES
-(1, 1, 6, '12012018143240Struk-Transfer.jpg', 'Kirim/Lunas', '2018-01-12'),
-(2, 3, 6, '16012018063037jamur-bulan.jpg', 'Kirim/Lunas', '2018-01-16');
+(4, 1, 6, '22012018064018Struk-Transfer.jpg', 'Kirim/Lunas', '2018-01-22'),
+(7, 2, 6, '22012018064913Struk-Transfer.jpg', 'Kirim/Lunas', '2018-01-22');
 
 -- --------------------------------------------------------
 
@@ -147,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `penjualan` (
   `id_darah` varchar(8) DEFAULT NULL,
   `banyaknya` int(8) DEFAULT NULL,
   `total` int(30) NOT NULL,
-  `tanggal` int(8) DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
   `status` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -156,12 +171,10 @@ CREATE TABLE IF NOT EXISTS `penjualan` (
 --
 
 INSERT INTO `penjualan` (`id_penjualan`, `id_keranjang`, `id_distributor`, `id_darah`, `banyaknya`, `total`, `tanggal`, `status`) VALUES
-('1', '1', '6', '1', 1, 50000, 2018, 'Kirim/Lunas'),
-('1', '1', '6', '1', 1, 50000, 2018, 'Kirim/Lunas'),
-('1', '1', '6', '1', 1, 50000, 2018, 'Kirim/Lunas'),
-('2', '1', '6', '1', 5, 250000, 2018, 'Kirim/Lunas'),
-('2', '2', '6', '2', 2, 16000, 2018, 'Kirim/Lunas'),
-('3', '1', '6', '1', 1, 50000, 2018, 'Kirim/Lunas');
+('1', '1', '6', '1', 1, 360000, '2018-01-24', 'Kirim/Lunas'),
+('1', '2', '6', '2', 1, 360000, '2018-01-24', 'Kirim/Lunas'),
+('2', '1', '6', '1', 1, 360000, '2018-01-24', 'Kirim/Lunas'),
+('3', '1', '6', '1', 1, 360000, '2018-01-24', 'Baru');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
