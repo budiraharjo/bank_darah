@@ -66,7 +66,7 @@
 include 'config.php';
 
 if(!isset($_SESSION['nip'] )== 0) {
-	header('Location: distributor.php');
+	header('Location: distributor/index.php');
 }
 
 if(isset($_POST['login'])) {
