@@ -234,7 +234,14 @@ if(isset($_SESSION['username'])== 0) {
 					switch($p){
                     default:
 
-                    echo"Selamat datang kembali admin";			
+                    echo"
+					</br>
+					<center><h4>Selamat datang kembali admin</h4></center>
+					</br>
+					</br>
+					</br>
+					</br>
+					";			
 
 					break;
                     case "penjualan":
