@@ -7,6 +7,7 @@ $id_penjualan = $_POST['id_penjualan'];
 $id_distributor = $_POST['id_distributor'];
 $tanggal = $_POST['tanggal'];
 $ket = "Baru";
+$seta = "Belum";
 
 $foto = $_FILES['foto']['name'];
 $tmp = $_FILES['foto']['tmp_name'];
@@ -17,7 +18,7 @@ $path = "../images/".$fotobaru;
 
 
 if(move_uploaded_file($tmp, $path)){ 
-	$query = "INSERT INTO konfirmasi VALUES('', '".$id_penjualan."', '".$id_distributor."', '".$fotobaru."', '".$ket."', '".$tanggal."')";
+	$query = "INSERT INTO konfirmasi VALUES('', '".$id_penjualan."', '".$id_distributor."', '".$fotobaru."', '".$ket."', '".$tanggal."', '".$seta."')";
 	$sql = mysqli_query($connect, $query);
 	if($sql){ 
 	
