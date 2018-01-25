@@ -211,7 +211,7 @@ controlWindow=window.open("struk.php","","toolbar=no,location=no,directories=no,
 			$do=mysql_fetch_array($dto);						 
 			
 			$id_distributoro = $do['id_distributor'];
-			$qry_jumlah_nilai=mysql_query("SELECT * FROM konfirmasi where id_distributor='$id_distributoro' AND status='Belum' ");
+			$qry_jumlah_nilai=mysql_query("SELECT * FROM konfirmasi where id_distributor='$id_distributoro' AND status='Belum' AND keterangan='Kirim/Lunas' ");
 			$array = mysql_num_rows($qry_jumlah_nilai);
 
 			?>          
@@ -690,7 +690,7 @@ controlWindow=window.open("struk.php","","toolbar=no,location=no,directories=no,
 							$rr=mysql_fetch_array($data1);
 							$id_distributor = $rr['id_distributor'];
 							
-							$beritahu=mysql_query("select * from konfirmasi where id_distributor='$id_distributor' ");
+							$beritahu=mysql_query("select * from konfirmasi where id_distributor='$id_distributor' AND keterangan='Kirim/Lunas' ");
 							while($data = mysql_fetch_array($beritahu)) {
 
                             echo"
