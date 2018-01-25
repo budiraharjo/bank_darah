@@ -202,10 +202,21 @@ controlWindow=window.open("struk.php","","toolbar=no,location=no,directories=no,
      
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
-                      
+            <?php
+			include "koneksi.php";
+			$conn = mysql_connect("localhost","root","");
+			mysql_select_db("bank_darah",$conn);
+			$nip = $_SESSION['nip'];
+			$dt=mysql_query("select * from distributor where nip='$nip'");
+			 $d=mysql_fetch_array($dt);						 
+			$id_distributor = $d['id_distributor'];
+			
+			$qry_jumlah_nilai=mysql_query("SELECT * FROM konfirmasi where id_distributor='$id_distributor' AND status='Belum' ");
+			$array = mysql_num_rows($qry_jumlah_nilai);
+			?>          
             <li class="dropdown user user-menu">
 			 <a href="?page=penjualan&act=pesan" class="dropdown-toggle">
-				<i class="fa fa-envelope-o"><small> 1</small></i> 
+				<i class="fa fa-envelope-o"><small> <?php echo json_encode($array); ?></small></i> 
 				</a>
 			</li>
 			
@@ -655,22 +666,24 @@ controlWindow=window.open("struk.php","","toolbar=no,location=no,directories=no,
 							<tr>
 								<td>Tanggal</td>
 								<td>Status</td>
+								<td>Ketarangan</td>
 							<tr>
 							</thead>
 							";
-                            $nip =$_SESSION['nip'];
+							
+							$nip =$_SESSION['nip'];
 							$data1=mysql_query("select * from distributor where nip='$nip'");
 							$rr=mysql_fetch_array($data1);
 							$id_distributor = $rr['id_distributor'];
 							
 							$beritahu=mysql_query("select * from konfirmasi where id_distributor='$id_distributor' ");
-						
 							while($data = mysql_fetch_array($beritahu)) {
-						
+
                             echo"
 								<tr>
-								<center><td>$data[keterangan]</td></center>
 								<center><td>$data[tanggal]</td></center>
+								<center><td><a href='?page=penjualan&act=baca&id_konfirmasi=$data[id_konfirmasi]'>$data[status]</a></td></center>
+								<center><td>$data[keterangan]</td></center>
 								</tr>
 							";
 						    }
@@ -683,7 +696,42 @@ controlWindow=window.open("struk.php","","toolbar=no,location=no,directories=no,
                             </div>
                             </div>
 							</section>";
+					break;
+					case "baca":
+                        //untuk autonumber di id_penjualan
+							echo"
+							<section class='col-lg-8 connectedSortable'>
+							<div class='box box-info' id='loading-example'>
+                            <div class='box-header'>
+							<center>PESAN MASUK</center>
+							<div class='modal-body'>
+							<div class='navbar-form' >
+							<table class='table'>
 							
+							";
+							include "db/koneksi.php";
+                            $id_konfirmasi = $_GET['id_konfirmasi'];						
+							$ejah=mysql_query("select * from konfirmasi where id_konfirmasi='$id_konfirmasi' ");
+						
+							while($baca = mysql_fetch_array($ejah)) {
+						
+                            echo"
+								<tr>
+								<center><td>Pemesanan anda pada Tanggal : $baca[tanggal] sudah berstatus $baca[keterangan], tunggu pesanan anda akan segera kami kirim.</td></center>
+								<td><a href='?page=penjualan&act=pesan'>Kembali</a></td>
+								</tr>
+							";
+						    }
+                       
+							mysql_query("update konfirmasi set status='Dibaca' where id_konfirmasi='$id_konfirmasi'");
+							echo"
+							</table>
+							</div>
+							</div>
+							</div>
+                            </div>
+                            </div>
+							</section>";		
 					break;
                     case "edit":
 						
