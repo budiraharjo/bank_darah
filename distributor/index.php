@@ -1,8 +1,8 @@
 <?php
-include 'config.php'; 
+include 'config.php';
 
 if(isset($_SESSION['nip'])== 0) { 
-	header('Location: ../index.php'); 
+header('Location: ../index.php'); 
 }
 
 ?>
@@ -206,17 +206,18 @@ controlWindow=window.open("struk.php","","toolbar=no,location=no,directories=no,
 			include "koneksi.php";
 			$conn = mysql_connect("localhost","root","");
 			mysql_select_db("bank_darah",$conn);
-			$nip = $_SESSION['nip'];
-			$dt=mysql_query("select * from distributor where nip='$nip'");
-			 $d=mysql_fetch_array($dt);						 
-			$id_distributor = $d['id_distributor'];
+			$nipo = $_SESSION['nip'];
+			$dto=mysql_query("select * from distributor where nip='$nipo'");
+			$do=mysql_fetch_array($dto);						 
 			
-			$qry_jumlah_nilai=mysql_query("SELECT * FROM konfirmasi where id_distributor='$id_distributor' AND status='Belum' ");
+			$id_distributoro = $do['id_distributor'];
+			$qry_jumlah_nilai=mysql_query("SELECT * FROM konfirmasi where id_distributor='$id_distributoro' AND status='Belum' ");
 			$array = mysql_num_rows($qry_jumlah_nilai);
+
 			?>          
             <li class="dropdown user user-menu">
 			 <a href="?page=penjualan&act=pesan" class="dropdown-toggle">
-				<i class="fa fa-envelope-o"><small> <?php echo json_encode($array); ?></small></i> 
+			<i class="fa fa-envelope-o"><small> <?php echo json_encode($array); ?></small></i> 
 				</a>
 			</li>
 			
@@ -428,7 +429,20 @@ controlWindow=window.open("struk.php","","toolbar=no,location=no,directories=no,
                     </div>
 			</section><!-- end main content -->		
 			<?php
-			include "db/koneksi.php";
+			
+			include 'db/koneksi.php';
+			$host = "localhost"; // nama host anda
+			$user = "root"; // username dari host anda
+			$pass = ""; //password dari host anda
+			$db   = "bank_darah"; // nama database yang anda miliki
+
+			try {
+			$connect = new PDO("mysql:host={$host};dbname={$db}", $user, $pass);
+			$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			}
+			catch(PDOException $e) {
+			echo $e->getMessage();
+			}
 			$p=isset($_GET['act'])?$_GET['act']:null;
 					switch($p){
                     default:
