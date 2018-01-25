@@ -130,6 +130,15 @@ if(isset($username, $nama, $password, $confirmPassword)) {
 
 ?>
 
+<script language='javascript'>
+function validAngka(a)
+{
+	if(!/^[0-9.]+$/.test(a.value))
+	{
+	a.value = a.value.substring(0,a.value.length-16);
+	}
+}
+</script>
 					<form method='post' action='' >
 						<div class='form'>
 							<div class='c12 noleftmargin'>
@@ -157,7 +166,7 @@ if(isset($username, $nama, $password, $confirmPassword)) {
 							</div>
 							<div class='c12 noleftmargin'>
 								<label>NIP</label>
-								<input type='text' name='nip'>
+								<input type='text' name='nip' size="16" onkeyup="validAngka(this)" maxlength="16" required>
 							</div>
 							
 							<div class='c12 noleftmargin'>
@@ -166,7 +175,7 @@ if(isset($username, $nama, $password, $confirmPassword)) {
 							</div>
 							<div class='c12 noleftmargin'>
 								<label>No Registrasi Instansi</label>
-								<input type='text' name='no_reg_instansi'>
+								<input type='text' name='no_reg_instansi' size="16" onkeyup="validAngka(this)" maxlength="16" required>
 							</div>
 							<div class='c12 noleftmargin'>
 								<label>Alamat</label>
@@ -175,7 +184,7 @@ if(isset($username, $nama, $password, $confirmPassword)) {
 							
 							<div class='c12 noleftmargin'>
 								<label>Telpon</label>
-								<input type='text' name='telp'>
+								<input type='text' name='telp' size="16" onkeyup="validAngka(this)" maxlength="12" required>
 							</div>
 							
 							
